@@ -1,0 +1,66 @@
+[
+  {
+    "step": "ingest",
+    "detail": "loaded sales=(136929, 6), sku=(204, 6), calendar=(731, 6), inventory=(19666, 6)"
+  },
+  {
+    "step": "sku_master.dedupe",
+    "detail": "dropped 4 exact/duplicate sku_id rows"
+  },
+  {
+    "step": "sku_master.category_normalize",
+    "detail": "trimmed whitespace, title-cased, mapped 'D\u00e9cor'/'Home Decor' -> 'Decor'"
+  },
+  {
+    "step": "sku_master.date_parse",
+    "detail": "parsed launch_date (mixed formats); 0 unparseable"
+  },
+  {
+    "step": "sku_master.impute_cost",
+    "detail": "filled 10 missing unit_cost values with category median"
+  },
+  {
+    "step": "sku_master.cap_outlier_price",
+    "detail": "capped 1 extreme list_price outlier(s) at ~p99"
+  },
+  {
+    "step": "sales.dedupe",
+    "detail": "dropped 754 duplicate (date, sku_id) rows"
+  },
+  {
+    "step": "sales.date_parse",
+    "detail": "parsed mixed date formats; dropped 0 unparseable rows"
+  },
+  {
+    "step": "sales.negative_units",
+    "detail": "clipped 24 negative units_sold rows to 0"
+  },
+  {
+    "step": "sales.outlier_winsorize",
+    "detail": "winsorized ~10 extreme units_sold spikes per-SKU at 3x p99"
+  },
+  {
+    "step": "sales.impute_price",
+    "detail": "filled 4080 missing unit_price from sku_master list_price"
+  },
+  {
+    "step": "sales.referential_integrity",
+    "detail": "dropped 0 rows with unknown sku_id"
+  },
+  {
+    "step": "inventory.dedupe",
+    "detail": "dropped 195 duplicate (date, sku_id) rows"
+  },
+  {
+    "step": "inventory.impute_on_order",
+    "detail": "filled 389 missing on_order_units with 0"
+  },
+  {
+    "step": "merge",
+    "detail": "joined sales + sku_master + calendar -> (136175, 16)"
+  },
+  {
+    "step": "feature_engineering",
+    "detail": "added dow/weekend/promo flags, lag_7/14/28, rolling mean/std(7,28), sku_age_days"
+  }
+]
