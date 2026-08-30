@@ -1,1 +1,1 @@
-pandas numpy scikit-learn lightgbm streamlit fastapi uvicorn[standard] plotly pyarrow pydantic
+ pandas numpy streamlit plotly pyarrow
